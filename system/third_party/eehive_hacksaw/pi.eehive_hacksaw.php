@@ -78,7 +78,7 @@ var $return_data = "";
 	if ($num_words > $limit) {
 	  $words = str_word_count($content, 2);
       $pos = array_keys($words);
-      $content = substr($content, 0, ($pos[$limit]-1)) . $append;
+      $content = mb_substr($content, 0, ($pos[$limit]-1), "UTF-8") . $append;
     }
     return $content;
     }
@@ -86,7 +86,7 @@ var $return_data = "";
   // Helper Function - Truncate by Character Limit
   function _truncate_chars($content, $chars_start, $limit, $append) {
     // Removing the below to see how it effect UTF-8. 
-    $content = preg_replace('/\s+?(\S+)?$/', '', substr($content, $chars_start, ($limit+1))) . $append;
+    $content = preg_replace('/\s+?(\S+)?$/', '', mb_substr($content, $chars_start, ($limit+1)), "UTF-8") . $append;
     return $content;
   }
   
@@ -94,7 +94,7 @@ var $return_data = "";
   function _truncate_cutoff($content, $cutoff, $words, $allow, $append) {
     $pos = strpos($content, $cutoff);
 	if ($pos != FALSE) {
-		$content = substr($content, 0, $pos) . $append;
+		$content = mb_substr($content, 0, $pos, "UTF-8") . $append;
 	} elseif ($words != "") {
 		$content = $this->_truncate_words(strip_tags($content, $allow), $words, '') . $append;
 	}
